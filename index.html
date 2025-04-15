@@ -1,97 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Forgive Me?</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #f5ebe0; /* Beige background */
-            transition: 0.5s ease-in-out;
-            overflow: hidden;
-        }
-        #container {
-            position: relative;
-            margin-top: 20vh;
-        }
-        h1 {
-            color: #5c4033; /* Dark brown */
-            font-size: 2em;
-        }
-        .btn {
-            font-size: 1.5em;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin: 20px;
-            border-radius: 10px;
-            position: absolute;
-        }
-        #yes {
-            background-color: #f5d7b7; /* Light beige */
-            color: #5c4033;
-            left: 40%;
-        }
-        #no {
-            background-color: #d4a373; /* Light brown */
-            color: #5c4033;
-            left: 55%;
-        }
-        #no span {
-            font-size: 1.2em;
-        }
-        #flowers {
-            display: none;
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: auto;
-        }
-        #yay {
-            display: none;
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2em;
-            font-weight: bold;
-            color: #5c4033; /* Dark brown */
-        }
-        .blur {
-            filter: blur(5px);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>I'm Sorry</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f8f5f1;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      transition: filter 0.3s ease;
+    }
+
+    .blur {
+      filter: blur(5px);
+    }
+
+    .popup {
+      position: fixed;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      text-align: center;
+      max-width: 300px;
+      transition: all 0.4s ease;
+      z-index: 999;
+    }
+
+    h2 {
+      color: #d67e8d;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .yes-btn {
+      background: #a3d2ca;
+      color: white;
+    }
+
+    .no-btn {
+      background: #e8aeb7;
+      color: white;
+      position: absolute;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .question {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.4);
+      z-index: 998;
+      backdrop-filter: blur(5px);
+    }
+  </style>
 </head>
 <body>
-    <div id="container">
-        <h1 id="question">Will you forgive me?</h1>
-        <button id="yes" class="btn" onclick="showFlowers()">Yes</button>
-        <button id="no" class="btn" onclick="moveNoButton()">No <span>😢</span></button>
-    </div>
+  <div id="mainContent">
+    <h1 style="font-size: 30px; color: #b5838d;">Hey... Can I say something?</h1>
+    <button onclick="showPopup()" class="yes-btn">Yes</button>
+  </div>
 
-    <img id="flowers" src="https://i.imgur.com/JZjxgq3.png" alt="Bouquet of roses and tulips">
-    <div id="yay">Yay!</div>
+  <div class="popup hidden" id="popupBox">
+    <h2>I'm Really Sorry</h2>
+    <p>I didn’t mean to upset you. Will you forgive me?</p>
+    <div class="question">Are you still mad at me?</div>
+    <button class="yes-btn" onclick="thankYou()">No, I forgive you</button>
+    <button class="no-btn" id="noBtn">Yes, still mad</button>
+  </div>
 
-    <script>
-        function showFlowers() {
-            document.getElementById("flowers").style.display = "block";
-            document.getElementById("yay").style.display = "block";
-            document.getElementById("container").classList.add("blur");
-        }
+  <div class="overlay hidden" id="overlay"></div>
 
-        function moveNoButton() {
-            let noButton = document.getElementById("no");
-            let maxWidth = window.innerWidth - noButton.offsetWidth;
-            let maxHeight = window.innerHeight - noButton.offsetHeight;
-            let newX = Math.random() * maxWidth;
-            let newY = Math.random() * maxHeight;
-            noButton.style.left = `${newX}px`;
-            noButton.style.top = `${newY}px`;
-        }
-    </script>
+  <script>
+    const popup = document.getElementById('popupBox');
+    const mainContent = document.getElementById('mainContent');
+    const noBtn = document.getElementById('noBtn');
+    const overlay = document.getElementById('overlay');
+
+    function showPopup() {
+      popup.classList.remove('hidden');
+      overlay.classList.remove('hidden');
+      mainContent.classList.add('blur');
+    }
+
+    function thankYou() {
+      popup.innerHTML = `<h2>Thank You!</h2><p>You mean a lot to me...</p>`;
+    }
+
+    noBtn.addEventListener('mouseover', () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = window.innerHeight - noBtn.offsetHeight;
+      const newX = Math.floor(Math.random() * maxX);
+      const newY = Math.floor(Math.random() * maxY);
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    });
+  </script>
 </body>
 </html>
