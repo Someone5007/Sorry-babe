@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Forgive Me?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f5ebe0; /* Beige background */
+            transition: 0.5s ease-in-out;
+            overflow: hidden;
+        }
+        #container {
+            position: relative;
+            margin-top: 20vh;
+        }
+        h1 {
+            color: #5c4033; /* Dark brown */
+            font-size: 2em;
+        }
+        .btn {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 20px;
+            border-radius: 10px;
+            position: absolute;
+        }
+        #yes {
+            background-color: #f5d7b7; /* Light beige */
+            color: #5c4033;
+            left: 40%;
+        }
+        #no {
+            background-color: #d4a373; /* Light brown */
+            color: #5c4033;
+            left: 55%;
+        }
+        #no span {
+            font-size: 1.2em;
+        }
+        #flowers {
+            display: none;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: auto;
+        }
+        #yay {
+            display: none;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: #5c4033; /* Dark brown */
+        }
+        .blur {
+            filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1 id="question">Will you forgive me?</h1>
+        <button id="yes" class="btn" onclick="showFlowers()">Yes</button>
+        <button id="no" class="btn" onclick="moveNoButton()">No <span>😢</span></button>
+    </div>
+
+    <img id="flowers" src="https://i.imgur.com/JZjxgq3.png" alt="Bouquet of roses and tulips">
+    <div id="yay">Yay!</div>
+
+    <script>
+        function showFlowers() {
+            document.getElementById("flowers").style.display = "block";
+            document.getElementById("yay").style.display = "block";
+            document.getElementById("container").classList.add("blur");
+        }
+
+        function moveNoButton() {
+            let noButton = document.getElementById("no");
+            let maxWidth = window.innerWidth - noButton.offsetWidth;
+            let maxHeight = window.innerHeight - noButton.offsetHeight;
+            let newX = Math.random() * maxWidth;
+            let newY = Math.random() * maxHeight;
+            noButton.style.left = `${newX}px`;
+            noButton.style.top = `${newY}px`;
+        }
+    </script>
+</body>
+</html>
